@@ -1,0 +1,123 @@
+// prevent overwrite css using use
+
+@use "_colors" as color;
+
+.use-colors {
+    .use-color {
+        color: color.$red;
+        background-color: color.$pink;
+    }
+}
+
+
+//  create variables
+
+$color1: black;
+
+body {
+    background-color: $color1;
+}
+
+
+// using array
+
+$colors: blue, red, green;
+
+body {
+    background-color: nth($colors, 1);
+}
+
+//  nesting
+
+.productCard {
+    max-width: 600px;
+    background-color: red;
+
+    // just <a> tag
+    >a {
+        color: blue;
+    }
+
+    >h2 {
+        color: pink;
+    }
+
+    // inside all <a> tag
+    a {
+        color: yellow;
+    }
+}
+
+
+//  variable inheritance
+@import "_colors";
+
+.colors {
+    .color {
+        color: $red;
+        background-color: $yellow;
+    }
+}
+
+// inheritance 
+
+button {
+    background-color: color.$red;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+}
+
+p {
+    @extend button;
+}
+
+.custom {
+    background-color: color.$red;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+}
+
+p {
+    @extend .custom;
+}
+
+
+// create template then if it is not working then it will not complie
+%custom {
+    background-color: color.$red;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+}
+
+p {
+    @extend %custom;
+}
+
+
+
+@mixin buttonFun($backgroundColor: white) {
+    background-color: $backgroundColor;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+}
+
+.p1 {
+    @include buttonFun(color.$yellow);
+    // sudo class
+    &:hover{
+        opacity: 0.7;
+    }
+    height: 20px * 2;
+}
+
+.p2 {
+    @include buttonFun(green);
+}
+
+.p3 {
+    @include buttonFun;
+}
